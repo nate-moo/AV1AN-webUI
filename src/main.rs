@@ -1,5 +1,6 @@
 #[macro_use] extern crate rocket;
 
+use rocket::Request;
 use rocket::response::Redirect;
 use rocket_dyn_templates::{Template, handlebars, context};
 
@@ -18,10 +19,18 @@ fn api(int: i32) -> String {
     format!("number {}", int)
 }
 
+#[catch(404)]
+pub fn not_found(req: &Request<'_>) -> Template {
+    Template::render("hbs/error/404", context! {
+        uri: req.uri()
+    })
+}
+
 #[launch]
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index, api])
+        .register("/", catchers![not_found])
         .attach(Template::custom(|engines| {
             engines.handlebars.register_helper("wow", Box::new(wow_helper));
         }))
