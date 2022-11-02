@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#main {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.section {
+    padding-top: .5rem;
+}
+
+.section > form > div > div > input {
+    display: flex;
+    justify-items: center;
+}
+
+.section > form > div > div > textarea {
+    display: flex;
+    justify-items: center;
+    width: 20rem;
+    height: 5rem;
+}

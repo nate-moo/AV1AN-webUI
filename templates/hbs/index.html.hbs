@@ -1,12 +1,40 @@
 {{#*inline "page"}}
-<section id="hello">
-    <h1>Hi {{ name }}!</h1>
-    <h3>Here are your items:</h3>
-    <ul>
-        {{#each items}}
-            <li>{{ this }}</li>
-        {{/each}}
-    </ul>
-</section>
+    <section id="main">
+
+        <h1>
+            AV1AN WebUI
+        </h1>
+        <form method="post" action="/api/start">
+            <div class="container">
+                <div class="section">
+                    <label for="input">Input File Name:</label>
+                    <input id="input" type="text">
+                </div>
+
+                <div class="section">
+                    <label for="output">Output File Name:</label>
+                    <input id="output" type="text">
+                </div>
+                <div class="section">
+                    <label for="encoder">Encoder:</label>
+                    <input id="encoder" type="text">
+                </div>
+                <div class="section">
+                    <label for="video">Video Params:</label>
+                    <textarea id="video"> </textarea>
+                </div>
+                <div class="section">
+                    <label for="audio">Audio Params:</label>
+                    <textarea id="audio"> </textarea>
+                </div>
+                <div class="section">
+                    <label for="submit">Start!</label>
+                    <input id="submit" type="submit" value="Lets Encode!">
+                </div>
+            </div>
+        </form>
+
+
+    </section>
 {{/inline}}
 {{> hbs/layout}}
