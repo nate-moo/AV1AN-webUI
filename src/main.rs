@@ -1,9 +1,12 @@
-#[macro_use] extern crate rocket;
+#[macro_use]
+extern crate rocket;
 
 use rocket::fs::FileServer;
 use rocket::Request;
 use rocket::response::Redirect;
 use rocket_dyn_templates::{context, handlebars, Template};
+
+use rand::Rng;
 
 #[get("/")]
 fn index() -> Template {
@@ -19,12 +22,13 @@ fn api(int: i32) -> String {
 
 #[post("/api/start")]
 fn start() -> Redirect {
-    let id = 12345;
+    let mut rng = rand::thread_rng();
+    let id: u32 = rng.gen();
     Redirect::to(format!("/progress/{}", id))
 }
 
 #[get("/progress/<id>")]
-fn progress(id: i32) -> Template {
+fn progress(id: u32) -> Template {
     Template::render("hbs/progress", context! {
         title: "Progress",
         identifier: id,
@@ -50,11 +54,11 @@ fn rocket() -> _ {
 }
 
 fn wow_helper(
-    h: &handlebars::Helper<'_, '_>,
+    _: &handlebars::Helper<'_, '_>,
     _: &handlebars::Handlebars,
     _: &handlebars::Context,
     _: &mut handlebars::RenderContext<'_, '_>,
-    out: &mut dyn handlebars::Output
+    _: &mut dyn handlebars::Output,
 ) -> handlebars::HelperResult {
     Ok(())
 }

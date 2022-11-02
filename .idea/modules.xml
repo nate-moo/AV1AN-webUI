@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AV1AN-webUI.iml" filepath="$PROJECT_DIR$/AV1AN-webUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../av1an_webui/av1an_webui.iml" filepath="$PROJECT_DIR$/../av1an_webui/av1an_webui.iml" />
     </modules>
   </component>
 </project>

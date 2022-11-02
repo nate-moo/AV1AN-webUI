@@ -1,3 +1,3 @@
 let prog = document.getElementById("progress");
 
-prog.innerText = "ffff"
+setInterval(() => prog.innerHTML = String(Math.random()), 100);
