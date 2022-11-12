@@ -2,12 +2,15 @@
 extern crate rocket;
 
 use std::thread::sleep;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use rand::Rng;
 use rocket::{Build, Request, Rocket};
 use rocket::form::Form;
 use rocket::fs::FileServer;
 use rocket::response::Redirect;
+use rocket::response::stream::{Event, EventStream};
+use rocket::tokio::time::{self, Duration};
 use rocket_dyn_templates::{context, handlebars, Template};
 
 #[derive(FromForm)]
@@ -18,6 +21,21 @@ struct Args {
     video: String,
     audio: String,
     submit: String,
+}
+
+#[get("/events")]
+fn stream() -> EventStream![] {
+    EventStream! {
+        let mut interval = time::interval(Duration::from_secs(1));
+        loop {
+            let time = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_millis();
+            yield Event::data(format!("ping {}", time));
+            interval.tick().await;
+        }
+    }
 }
 
 #[get("/")]
@@ -62,7 +80,7 @@ pub fn not_found(req: &Request<'_>) -> Template {
 #[launch]
 fn rocket() -> Rocket<Build> {
     rocket::build()
-        .mount("/", routes![index, api, start, progress, data_api])
+        .mount("/", routes![index, api, start, progress, data_api, stream])
         .register("/", catchers![not_found])
         .mount("/public", FileServer::from("static"))
         .attach(Template::custom(|engines| {

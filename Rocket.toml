@@ -1,2 +1,5 @@
 [default]
 template_dir = "templates"
+
+[debug]
+port = 8008
