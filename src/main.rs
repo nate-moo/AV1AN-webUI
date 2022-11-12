@@ -23,8 +23,8 @@ struct Args {
     submit: String,
 }
 
-#[get("/events")]
-fn stream() -> EventStream![] {
+#[get("/events/<id>")]
+fn stream(id: u32) -> EventStream![] {
     EventStream! {
         let mut interval = time::interval(Duration::from_secs(1));
         loop {
@@ -32,7 +32,7 @@ fn stream() -> EventStream![] {
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
                 .as_millis();
-            yield Event::data(format!("ping {}", time));
+            yield Event::data(format!("ping {} -- ID: {}", time, id));
             interval.tick().await;
         }
     }

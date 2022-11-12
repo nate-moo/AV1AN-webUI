@@ -1,5 +1,5 @@
 let prog = document.getElementById("progress");
-let id = document.querySelector("span#identifier");
+let id = document.querySelector("span#identifier").innerText;
 
 
 // setInterval(
@@ -10,7 +10,7 @@ let id = document.querySelector("span#identifier");
 const utf = new TextDecoder("utf-8");
 let result;
 let first = true;
-fetch('/events')
+fetch(`/events/${id}`)
     .then((response) => response.body)
     .then((stream) => {
 
